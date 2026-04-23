@@ -5,7 +5,7 @@ from consultas_api import consultar_abuse_ip
 # 1. Configuración de la página
 st.set_page_config(page_title="BID - Inteligencia Estadística", page_icon="🛡️")
 
-st.title("🛡️ Inteligencia Estadística de IPs Maliciosas")
+st.title("🛡️ Inteligencia Estadística de IPs Maliciosas 🛡️")
 st.markdown("""
 Este portal calcula la probabilidad de que una IP sea una amenaza utilizando el **Teorema de Bayes** y compara los resultados con fuentes globales como **AbuseIPDB**.
 """)
