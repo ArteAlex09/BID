@@ -25,3 +25,15 @@ coverage.xml
 # My API Keys (¡Importante!)
 .env
 keys.txt
+
+# Entornos virtuales y secretos
+.streamlit/
+myenv/
+data/myenv/
+
+# Archivos de respaldo
+*_original.py
+*.bak
+
+# Variables de entorno (¡Muy importante por seguridad!)
+.env
