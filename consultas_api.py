@@ -77,3 +77,69 @@ def reportar_ip_abuse(ip, categorias_ids, comentario="Reportado desde BID UdeG")
             return {"error": True, "mensaje": response.text, "codigo": response.status_code}
     except Exception as e:
         return {"error": True, "mensaje": str(e)}
+
+import requests
+
+def consultar_perfil_completo(ip):
+    """
+    Consolida la telemetría de AbuseIPDB e IP-API en un solo diccionario 
+    con las llaves exactas que requiere el Motor Bayesiano.
+    """
+    # 1. Consulta de reputación (Usando la función que ya tienes programada)
+    # Asumimos que consultar_abuse_ip(ip) está definida más arriba en este mismo archivo
+    datos_abuse = consultar_abuse_ip(ip)
+    
+    # Si la IP es inválida, privada, o falla la API de AbuseIPDB, abortamos
+    if not datos_abuse:
+        return None
+        
+    # 2. Consulta Geográfica y Organizacional (IP-API)
+    # Para el simulador en tiempo real es mejor una petición individual que por lotes
+    try:
+        url_ip_api = f"http://ip-api.com/json/{ip}?fields=status,message,country,isp,org"
+        respuesta_geo = requests.get(url_ip_api, timeout=5)
+        if respuesta_geo.status_code == 200:
+            datos_geo = respuesta_geo.json()
+        else:
+            datos_geo = {}
+    except requests.exceptions.RequestException:
+        datos_geo = {}
+
+    # 3. Empaquetado de Datos
+    # Extraemos las categorías de todos los reportes y las guardamos como texto
+    categorias_encontradas = set()
+    for reporte in datos_abuse.get('reports', []):
+        for cat in reporte.get('categories', []):
+            categorias_encontradas.add(str(cat))
+    
+    # Formateamos la fecha para evitar errores de tipo nulo
+    fecha_reporte = datos_abuse.get('lastReportedAt')
+    if not fecha_reporte:
+        fecha_reporte = 'Unknown'
+
+    # Construimos el diccionario con las llaves que espera motor_bayesiano.py
+    perfil_consolidado = {
+        'abuseip_score': str(datos_abuse.get('abuseConfidenceScore', '0')),
+        'usage_type': str(datos_abuse.get('usageType', 'Unknown')),
+        # Alineación estricta con tu CSV:
+        'abuseip_categories': str(list(categorias_encontradas)) if categorias_encontradas else 'No_Reports',
+        'abuseip_distinct_users': str(datos_abuse.get('numDistinctUsers', '0')),
+        'abuseip_last_reported': fecha_reporte if fecha_reporte != 'Unknown' else 'Never_Reported',
+        'country': str(datos_geo.get('country', 'Unknown')),
+        'isp': str(datos_geo.get('isp', 'Unknown')),
+        'infra_owner': str(datos_geo.get('org', 'Unknown'))
+    # }
+
+    # # Construimos el diccionario con las llaves que espera motor_bayesiano.py
+    # perfil_consolidado = {
+    #     'abuseip_score': str(datos_abuse.get('abuseConfidenceScore', '0')),
+    #     'usage_type': str(datos_abuse.get('usageType', 'Unknown')),
+    #     'abuseip_categories': str(list(categorias_encontradas)) if categorias_encontradas else 'Unknown',
+    #     'abuseip_distinct_users': str(datos_abuse.get('numDistinctUsers', '0')),
+    #     'abuseip_last_reported': fecha_reporte,
+    #     'country': str(datos_geo.get('country', 'Unknown')),
+    #     'isp': str(datos_geo.get('isp', 'Unknown')),
+    #     'infra_owner': str(datos_geo.get('org', 'Unknown'))
+    }
+    
+    return perfil_consolidado
