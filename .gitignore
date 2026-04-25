@@ -37,3 +37,4 @@ data/myenv/
 
 # Variables de entorno (¡Muy importante por seguridad!)
 .env
+.DS_Store
