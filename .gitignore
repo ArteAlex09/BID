@@ -26,6 +26,7 @@ coverage.xml
 
 # My API Keys (¡Importante!)
 .env
+.env.example
 keys.txt
 
 # Entornos virtuales y secretos

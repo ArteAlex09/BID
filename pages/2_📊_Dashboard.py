@@ -5,7 +5,6 @@ import plotly.express as px
 # --- CONFIGURACIÓN ---
 st.set_page_config(page_title="Dashboard Estadístico", page_icon="📊", layout="wide")
 st.title("📊 Dashboard de Inteligencia de Amenazas")
-st.markdown("Análisis estadístico descriptivo basado en la muestra de infraestructura de red (Mayo 2025 - Enero 2026).")
 
 # ==========================================
 # --- DICCIONARIOS GLOBALES ---
@@ -244,7 +243,7 @@ with tab2:
             st.plotly_chart(fig_tree, use_container_width=True)
     else:
         st.warning("No hay datos para mostrar gráficos con los filtros actuales.")
-        
+
 # ------------------------------------------
 # PESTAÑA 3: PROBABILIDAD CLÁSICA (ENTREGABLE 2)
 # ------------------------------------------
@@ -295,7 +294,7 @@ with tab3:
         c_res4.metric(f"P(A | B)", f"{p_A_given_B:.4f}", help=f"Probabilidad condicional de A dado que ya ocurrió B")
 
         # Comprobación de Independencia
-        st.markdown("### ⚖️ Prueba de Independencia (Punto 9 del Reporte)")
+        st.markdown("### ⚖️ Prueba de Independencia ")
         st.latex(r"¿ P(A \cap B) = P(A) \times P(B) ?")
         
         p_A_times_p_B = p_A * p_B
