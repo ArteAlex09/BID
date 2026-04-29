@@ -25,6 +25,7 @@ nosetests.xml
 coverage.xml
 
 # My API Keys (¡Importante!)
+.env.example
 .env
 .env.example
 keys.txt
