@@ -54,12 +54,12 @@ python3 -m venv venv
 
 ### 3. Activar el Entorno Virtual
 
-En Linux o Mac OS
+En Linux o Mac OS:
 ```bash
 source venv/bin/activate
 
 ```
-En Windows
+En Windows:
 ```Powershell / CMD
 ./venv/Scripts/Activate.ps1
 ```
@@ -76,7 +76,7 @@ pip3 install -r requirements.txt
 
 ```
 
-### 6. Iniciar la Aplicación
+### 5. Iniciar la Aplicación
 
 Arranca el servidor web interactivo:
 
