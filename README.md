@@ -54,10 +54,12 @@ python3 -m venv venv
 
 ### 3. Activar el Entorno Virtual
 
+En Linux o Mac OS
 ```bash
 source venv/bin/activate
 
 ```
+En Windows
 ```Powershell / CMD
 ./venv/Scripts/Activate.ps1
 ```
