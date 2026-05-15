@@ -3,41 +3,6 @@ import pandas as pd
 # Valores que se consideran como "ausencia de datos"
 NULOS = ['Unknown', 'Error_Timeout', 'None', '', 'Fetch_Error', 'Empty_JSON']
 
-# def calcular_likelihood(df, variable, valor_api, is_malicious):
-#     """Calcula P(Variable | Maliciosa) o P(Variable | Benigna) dinámicamente."""
-#     subset = df[df['is_malicious'] == str(is_malicious)]
-#     total_clase = len(subset)
-    
-#     # 1. Variables de Razón (Lógica Binaria: > 0 o == 0)
-#     if variable in ['abuseip_score', 'abuseip_distinct_users']:
-#         try:
-#             valor_num = float(valor_api) if valor_api not in NULOS else 0.0
-#         except:
-#             valor_num = 0.0
-            
-#         if valor_num > 0:
-#             casos = len(subset[pd.to_numeric(subset[variable], errors='coerce').fillna(0) > 0])
-#         else:
-#             casos = len(subset[pd.to_numeric(subset[variable], errors='coerce').fillna(0) == 0])
-            
-#     # 2. Variables de Existencia (Tiene reportes vs No tiene)
-#     elif variable in ['abuseip_categories', 'abuseip_last_reported']:
-#         if str(valor_api) not in NULOS and valor_api != '[]':
-#             casos = len(subset[~subset[variable].isin(NULOS)])
-#         else:
-#             casos = len(subset[subset[variable].isin(NULOS)])
-            
-#     # 3. Variables Nominales Exactas (country, isp, usage_type, infra_owner)
-#     else:
-#         casos = len(subset[subset[variable] == str(valor_api)])
-        
-#         # SUAVIZADO DE LAPLACE: Si el país/ISP es nuevo y no está en el CSV, 
-#         # asignamos un pseudo-conteo mínimo para no multiplicar por 0.
-#         if casos == 0:
-#             casos = 0.1 
-
-#     return casos / total_clase
-
 def calcular_likelihood(df, variable, valor_api, is_malicious):
     """Calcula P(Variable | Maliciosa) o P(Variable | Benigna) dinámicamente."""
     subset = df[df['is_malicious'] == str(is_malicious)]
@@ -63,7 +28,7 @@ def calcular_likelihood(df, variable, valor_api, is_malicious):
             # Si tiene cualquier otro texto, asumimos que sí tiene reportes
             casos = len(subset[~subset[variable].isin(['No_Reports', 'Never_Reported', 'Unknown', 'None', ''])])
             
-    # 3. Variables Nominales Exactas (country, isp, usage_type, infra_owner)
+    # 3. Variables Nominales Exactas (country, asn, isp, usage_type, infra_owner)
     else:
         casos = len(subset[subset[variable] == str(valor_api)])
         
@@ -78,12 +43,16 @@ def calcular_likelihood(df, variable, valor_api, is_malicious):
 
     return casos / total_clase
 
-def ejecutar_inferencia(perfil_ip, variables_activas):
+# ---> AQUI ESTÁ EL CAMBIO CLAVE: Agregamos df=None <---
+def ejecutar_inferencia(perfil_ip, variables_activas, df=None):
     """
     Recibe el diccionario con los datos de la IP y la lista de variables a usar.
     Retorna la probabilidad Bayesiana actualizada.
     """
-    df = pd.read_csv("data/BID_dataset.csv", dtype=str)
+    # Si el script externo (como el generador) no le pasa el DataFrame en memoria, lo lee.
+    # Si sí se lo pasa, se salta esta lectura y el proceso vuela.
+    if df is None:
+        df = pd.read_csv("data/BID_dataset.csv", dtype=str)
     
     # Probabilidades Previas (Priors)
     total_ips = len(df)
