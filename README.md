@@ -58,6 +58,10 @@ python3 -m venv venv
 source venv/bin/activate
 
 ```
+```Powershell / CMD
+./venv/Scripts/Activate.ps1
+```
+
 
 *(Notarás que tu terminal ahora dice `(venv)` al inicio de la línea).*
 
