@@ -76,15 +76,6 @@ pip3 install -r requirements.txt
 
 ```
 
-### 5. (Opcional) Entrenar el Modelo de Inteligencia Artificial
-
-Si es la primera vez que lo ejecutas o deseas regenerar el modelo de Random Forest con el dataset más reciente:
-
-```bash
-python3 entrenar_rf.py
-
-```
-
 ### 6. Iniciar la Aplicación
 
 Arranca el servidor web interactivo:
