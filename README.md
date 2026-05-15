@@ -14,16 +14,6 @@ Desarrollar una herramienta que calcule la probabilidad $P(M|E)$ de que una dire
 ## 📈 Lógica Estadística
 El sistema evalúa la presencia de una IP en múltiples fuentes de datos y actualiza la probabilidad de amenaza conforme se encuentra evidencia en los datasets locales y externos.
 
-
-``python
-import zipfile
-
-readme_content = """# 🛡️ Proyecto BID: Sistema Estadístico de Inteligencia de Amenazas
-
-Bienvenido al **Proyecto BID**, una plataforma avanzada de ciberseguridad desarrollada para la clase de Probabilidad y Estadística de la Universidad de Guadalajara.
-
-Este sistema utiliza **Inferencia Bayesiana** y **Machine Learning (Random Forest)** para calcular la probabilidad real de que una dirección IP sea maliciosa ($P(M|E)$), analizando múltiples vectores y características.
-
 ---
 
 ## 💻 Requisitos Previos (Para macOS)
@@ -135,44 +125,10 @@ docker run -p 8501:8501 proyecto-bid
 
 
 * `motor_bayesiano.py`: Núcleo estadístico (Teorema de Bayes, Suavizado de Laplace).
-* `entrenar_rf.py`: Script para el entrenamiento del modelo Random Forest.
 * `requirements.txt`: Lista estricta de dependencias Python.
 * `Dockerfile`: Archivo de configuración para despliegue en contenedores.
 
 ---
 
 *Proyecto Universitario - Universidad de Guadalajara*
-"""
 
-requirements_content = """streamlit==1.32.0
-pandas==2.2.1
-plotly==5.19.0
-requests==2.31.0
-scikit-learn==1.4.1.post1
-numpy==1.26.4
-"""
-
-with open("README.md", "w", encoding="utf-8") as f:
-f.write(readme_content)
-
-with open("requirements.txt", "w", encoding="utf-8") as f:
-f.write(requirements_content)
-
-with zipfile.ZipFile("Proyecto_BID_Archivos_Ejecucion.zip", "w") as zf:
-zf.write("README.md")
-zf.write("requirements.txt")
-
-print("Files created and zipped successfully.")
-
-```
-Tu archivo ZIP que contiene el `README.md` y el archivo `requirements.txt` está listo:
-[file-tag: code-generated-file-0-1778807435660139962]
-
-He creado un archivo empaquetado (.zip) que incluye dos elementos clave para que tu profesor pueda revisar y montar el proyecto en su Mac sin ningún problema:
-
-1. **README.md**: Un documento profesional, muy detallado y formateado, que explica brevemente de qué trata el proyecto e incluye comandos específicos de Mac (usando `python3` y `pip3`, rutas comunes en macOS, y creación de entornos virtuales) para asegurar que a tu profesor no le marque ningún error al intentar correrlo. También añadí las instrucciones para correrlo por Docker en caso de que lo prefiera.
-2. **requirements.txt**: Este es el archivo adicional que te agregué. Para que el proyecto corra sin problemas en otra computadora, es vital que tu profesor instale las mismas librerías que tú utilizaste (`streamlit`, `pandas`, `scikit-learn`, etc.). El README le indica exactamente cómo instalar este archivo con un solo comando.
-
-Solo necesitas descargar el ZIP, extraer ambos archivos y colocarlos en la carpeta principal de tu repositorio/proyecto (junto a `Inicio.py` y el `Dockerfile`). ¡Mucho éxito en la entrega!
-
-```
