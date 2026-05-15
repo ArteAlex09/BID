@@ -69,7 +69,7 @@ En Windows
 
 ### 4. Instalar las Dependencias
 
-Se ha incluido un archivo `requirements.txt` con todas las librerías necesarias (Streamlit, Pandas, Plotly, Scikit-learn, etc.):
+Se ha incluido un archivo `requirements.txt` con todas las librerías necesarias (Streamlit, Pandas, Plotly, CatBoost, etc.):
 
 ```bash
 pip3 install -r requirements.txt
