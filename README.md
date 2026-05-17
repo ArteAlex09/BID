@@ -74,7 +74,7 @@ A continuación se detallan las fuentes utilizadas tanto para el enriquecimiento
     Ejecuta el siguiente comando:
     ```powershell
     # Comentario: Cambia la letra X de este comando por la API Key de AbuseIP y ejecútalo.
-    docker run -d -p 8501:8501 -e ABUSE_IP_KEY=X amzk12/bid-project:latest
+    docker run -d -p 8501:8501 -e ABUSEIP_API_KEY=X amzk12/bid-project:latest
     ```
     Verifica si ya está corriendo.
     ```powershell
