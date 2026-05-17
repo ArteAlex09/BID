@@ -1,131 +1,119 @@
-# BID 🛡️📊
+# Bad IP Detector (BID) 🛡️📊
 
-Proyecto universitario para la clase de **Probabilidad y Estadística**.
-
-## 🎯 Objetivo
-Desarrollar una herramienta que calcule la probabilidad $P(M|E)$ de que una dirección IP sea maliciosa utilizando el **Teorema de Bayes**, alimentado por tres datasets distintos y validado contra motores de reputación externos.
-
-## 🛠️ Tecnologías
-* **Lenguaje:** Python
-* **Modelo:** Inferencia Bayesiana
-* **Integraciones:** AbuseIPDB API / VirusTotal API
-* **Interfaz:** [Aquí puedes poner Streamlit o FastAPI, según decidas]
-
-## 📈 Lógica Estadística
-El sistema evalúa la presencia de una IP en múltiples fuentes de datos y actualiza la probabilidad de amenaza conforme se encuentra evidencia en los datasets locales y externos.
+Sistema de detección y análisis de riesgo para direcciones IPv4 basado en **Inteligencia Artificial** y **Estadística Bayesiana**.
 
 ---
 
-## 💻 Requisitos Previos (Para macOS)
+## 📖 ¿Cómo nace BID?
 
-Para ejecutar este proyecto en tu Mac, tienes dos opciones: ejecutarlo de manera nativa con Python o usar Docker. 
+Todo desarrollo tiene un origen, y **BID (Bad IP Detector)** no nació en un entorno corporativo, sino como una iniciativa analítica en las aulas. El proyecto surgió originalmente como un trabajo escolar para la materia de **Probabilidad y Estadística**. Impulsado por el interés de aterrizar la teoría matemática en desafíos técnicos y reales de ciberseguridad, el concepto tomó forma mediante la asesoría y guía del profesor **Edgar Gonzalo Cossio Franco**.
 
-Si eliges la opción nativa (recomendada), asegúrate de tener instalado:
-- **Python 3.9 o superior**: Puedes verificarlo abriendo la `Terminal` y escribiendo `python3 --version`.
-- **pip**: El gestor de paquetes de Python (generalmente viene incluido con Python 3).
+Lo que comenzó como un ejercicio académico enfocado en crear un modelo de riesgo probabilístico utilizando la teoría bayesiana, evolucionó significativamente hasta convertirse en una herramienta que integra *Machine Learning* e inteligencia de amenazas para identificar direcciones IPv4 maliciosas.
 
 ---
 
-## 🚀 Opción 1: Ejecución Nativa en macOS (Recomendada)
+## 📝 ¿Qué es BID?
 
-Sigue estos pasos en tu aplicación `Terminal` (`Comando + Espacio` y escribe "Terminal"):
+**BID** es una solución de ciberseguridad que utiliza un enfoque híbrido. Al no depender únicamente de listas negras estáticas, el sistema combina el poder predictivo del algoritmo **CatBoost** con el rigor del análisis estadístico (**Teorema de Bayes**). Su objetivo es proporcionar una puntuación de riesgo dinámica y confiable que permita tomar decisiones proactivas frente a posibles intrusiones o tráfico anómalo.
 
-### 1. Navegar a la carpeta del proyecto
-Abre la terminal y navega hasta donde descomprimiste este proyecto. Por ejemplo, si está en tus Descargas:
+### 🚀 Características Principales
 
-```
-
-```text
-Files created and zipped successfully.
-
-```bash
-cd ~/Downloads/Proyecto-BID
-
-```
-
-### 2. Crear un Entorno Virtual
-
-Es una buena práctica para no interferir con las librerías de tu Mac:
-
-```bash
-python3 -m venv venv
-
-```
-
-### 3. Activar el Entorno Virtual
-
-En Linux o Mac OS:
-```bash
-source venv/bin/activate
-
-```
-En Windows:
-```Powershell / CMD
-./venv/Scripts/Activate.ps1
-```
-
-
-*(Notarás que tu terminal ahora dice `(venv)` al inicio de la línea).*
-
-### 4. Instalar las Dependencias
-
-Se ha incluido un archivo `requirements.txt` con todas las librerías necesarias (Streamlit, Pandas, Plotly, CatBoost, etc.):
-
-```bash
-pip3 install -r requirements.txt
-
-```
-
-### 5. Iniciar la Aplicación
-
-Arranca el servidor web interactivo:
-
-```bash
-streamlit run Inicio.py
-
-```
-
-¡Listo! Se abrirá automáticamente una pestaña en tu navegador (Safari o Chrome) en la dirección `http://localhost:8501`.
-
----
-
-## 🐳 Opción 2: Ejecución mediante Docker
-
-Si prefieres usar contenedores y tienes **Docker Desktop** instalado en tu Mac:
-
-1. Abre la Terminal en la carpeta del proyecto.
-2. Construye la imagen (esto descargará las dependencias necesarias):
-```bash
-docker build -t proyecto-bid .
-
-```
-
-
-3. Ejecuta el contenedor:
-```bash
-docker run -p 8501:8501 proyecto-bid
-
-```
-
-
-4. Abre tu navegador web y entra a: `http://localhost:8501`
-
----
+* **Análisis de Riesgo:** Calcula la probabilidad de que una dirección IPv4 sea maliciosa o benigna mediante el uso combinado de Machine Learning (CatBoost) y cálculo probabilístico (Teorema de Bayes).
+* **Obtención de Inteligencia:** Realiza consultas automatizadas a fuentes abiertas (AbuseIPDB, IP-API) para extraer datos enriquecidos del reporte (confianza de abuso, tipo de uso, ataques reportados) y de la dirección IP (país, ASN, ISP).
+* **Denuncia Automatizada:** Gestión de incidentes mediante una interfaz dedicada para la sumisión de IPs hacia AbuseIPDB, permitiendo categorizar el tipo de ataque de forma directa a través de su API.
+* **Análisis Estadístico Avanzado:** Clasificación de variables según su naturaleza (nominal, numérica, etc.) para el cálculo de medidas de tendencia central, dispersión y posición relativa.
+* **Dashboard de Amenazas:** Tablero interactivo con mapas de calor sobre el origen geográfico de los incidentes, gráficos de barras para vectores de ataque y análisis de la infraestructura proveedora (ISP).
+* **Prueba de Independencia:** Módulo especializado para seleccionar dos variables del dataset y analizar estadísticamente si son dependientes o independientes.
+* **Pipeline de Preparación:** Implementación de scripts dedicados a la depuración y limpieza de datos (*data cleaning*) para asegurar la estructura y calidad de la información antes de inyectarla al modelo.
 
 ## 📂 Estructura del Proyecto
 
 * `Inicio.py`: Archivo principal que lanza la interfaz gráfica de la plataforma.
-* `pages/`: Contiene los módulos del sistema.
-* `1_📡_Analizador.py`: Buscador que ejecuta el modelo bayesiano.
-* `2_📊_Dashboard.py`: Análisis descriptivo e interactivo usando One-Hot Encoding.
-* `3_🛠️_Herramientas.py`: Herramientas de reporte a bases de datos externas.
-
-
+* `data/`:
+    * `BID_dataset.csv`: Dataset con 970 direcciones IPv4.
+    * `training_BID_dataset.cbm`: Archivo de entrenamiento para la IA.
+* `pages/`:
+    * `1_📡_Analizador.py`: Buscador que ejecuta el modelo bayesiano.
+    * `2_📊_Dashboard.py`: Análisis descriptivo e interactivo usando One-Hot Encoding.
+    * `3_🛠️_Herramientas.py`: Herramientas de reporte a bases de datos externas.
+* `predictor.py`: Modelo predictor con IA (CatBoost)
 * `motor_bayesiano.py`: Núcleo estadístico (Teorema de Bayes, Suavizado de Laplace).
-* `requirements.txt`: Lista estricta de dependencias Python.
-* `Dockerfile`: Archivo de configuración para despliegue en contenedores.
+
+## ℹ️ Origen de los Datos
+
+A continuación se detallan las fuentes utilizadas tanto para el enriquecimiento en tiempo real como para la consolidación del dataset base de entrenamiento:
+
+| Tipo de Información | Fuente / Repositorio | Propósito |
+| :--- | :--- | :--- |
+| **Información de Reportes** | [AbuseIPDB API](https://api.abuseipdb.com/api/v2/check) | Inteligencia y Reporte de Amenazas |
+| **Datos Geográficos / ISP** | [IP-API](http://ip-api.com/batch) | Geolocalización y Datos de Red |
+| **Listas Negras (Blacklists)** | [CIRCL OSINT Feed](https://www.circl.lu/doc/misp/feed-osint) | Datos de Entrenamiento Histórico |
+| **Listas Blancas (Whitelists)** | [MISP Warninglists](https://misp.github.io/misp-warninglists/) | Filtrado de Falsos Positivos |
+
+### 🔍 Desglose de Listas Blancas (MISP):
+* [Microsoft Office 365](https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/microsoft-office365-ip/list.json) | [Cloudflare](https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/cloudflare/list.json) | [Googlebot](https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/googlebot/list.json)
+* [Amazon AWS](https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/amazon-aws/list.json) | [Public DNS v4](https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/public-dns-v4/list.json) | [Microsoft Azure](https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/microsoft-azure/list.json)
+
 
 ---
 
-*Proyecto Universitario - Universidad de Guadalajara*
+# 🚀 Guía de Instalación y Despliegue
+
+> ⚠️ **ADVERTENCIA:** Es estrictamente necesario contar con una API Key válida de [AbuseIPDB](https://www.abuseipdb.com/) para el despliegue del proyecto. Puedes registrarte y obtenerla de forma gratuita en su sitio oficial.
+
+### 📋 Prerrequisitos Generales
+* **API Key** de AbuseIP.
+* **Python 3.9 o superior**.
+* **Git** (opcional).
+* **Docker** (opcional).
+## Opciones para el despliegue
+### A) Despliegue con Docker 🐋 (recomendado)
+1. **Enciende Docker**.
+2. **Abre la consola (Windows) o terminal (Linux/Mac OS)**.
+3. **Instala el proyecto**.
+    Ejecuta el siguiente comando:
+    ```powershell
+    # Comentario: Cambia la letra X de este comando por la API Key de AbuseIP y ejecútalo.
+    docker run -d -p 8501:8501 -e ABUSE_IP_KEY=X amzk12/bid-project:latest
+    ```
+    Verifica si ya está corriendo.
+    ```powershell
+    docker ps
+    ```
+    Para detener la ejecución sólo escribe:
+    ```powershell
+    # Comentario: Sustituye el <ID_o_nombre_del_contenedor> por el ID o nombre que aparezca en docker ps.
+    docker stop <ID_o_nombre_del_contenedor>
+    ```
+4. **Navega hacia [http://localhost:8501](http://localhost:8501)**.
+### B) Despliegue con Python 🐍
+1. **Descarga el repositorio**.
+    - A través de este [enlace](https://github.com/ArteAlex09/BID/archive/refs/heads/main.zip) (es necesario descomprimir el archivo).
+    - O mediante Git: `git clone https://github.com/ArteAlex09/BID.git`
+2. **Abre la consola (Windows) o terminal (Linux/Mac OS)**.
+3. **Dirígete hacia la ruta/carpeta del repositorio**.
+4. **Crea un entorno virtual**.
+    *Windows:*
+    ```powershell
+    1 python3 -m venv venv
+    2 .\venv\Scripts\Activate.ps1
+    ```
+    *Linux/Mac OS:*
+    ```powershell
+    1 python3 -m venv venv
+    2 source/bin/activate
+    ```
+5. **Instala los requerimientos**.
+    ```powershell
+    pip install -r requirements.txt
+    ```
+6. **Crea un archivo de configuración del entorno (.env).**
+- Cambia el nombre del archivo `.env.example` por `.env`.
+- Abre el archivo `.env` con cualquier editor de texto.
+- Sustituye la letra `x` por la **API Key** de AbuseIP que generaste.
+7. **Enciende la interfaz gráfica**.
+    ```powershell
+    streamlit run Inicio.py
+    ```
+8. **Navega hacia [http://localhost:8501](http://localhost:8501)**.
 
