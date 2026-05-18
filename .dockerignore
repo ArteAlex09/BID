@@ -3,8 +3,7 @@ __pycache__/
 .git/
 .gitignore
 README.md
-
-consultas_api_original.py
+.env
 
 # Ignorar configuración de Streamlit y secretos
 .streamlit/
