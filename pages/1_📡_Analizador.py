@@ -190,10 +190,13 @@ if st.button("Ejecutar Análisis Híbrido"):
                                         st.write(f"**Categorías:** {valor}")
 
                             elif var == 'abuseip_last_reported':
-                                if valor == 'Never_Reported':
-                                    st.write("**Último Reporte:** Jamás")
+                                if not valor or valor in ['Never_Reported', 'Unknown', 'N/A']:
+                                    st.write("**Último Reporte:** Jamás / No disponible")
                                 else:
-                                    st.write(f"**Último Reporte:** {valor.split('T')[0]}")
+                                    try:
+                                        st.write(f"**Último Reporte:** {valor.split('T')[0]}")
+                                    except (AttributeError, IndexError):
+                                        st.write(f"**Último Reporte:** {valor}")
 
                             elif var == 'country':
                                 datos_pais = TRADUCCION_PAISES.get(valor)
